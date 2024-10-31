@@ -1,8 +1,38 @@
-# React + Vite
+# Task Manager App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple, responsive Task Manager application built with React, Vite, and Tailwind CSS. This application includes a settings page where users can manage language, timezone, and time format.
 
-Currently, two official plugins are available:
+## Table of Contents
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Running the App](#running-the-app)
+- [Running Tests](#running-tests)
+- [Deployment](#deployment)
+- [Technologies Used](#technologies-used)
+- [License](#license)
+
+## Features
+
+- User settings page with options to change language, timezone, and time format.
+- Responsive UI built with Tailwind CSS.
+- Efficient hot module replacement (HMR) with Vite for fast development.
+
+## Getting Started
+
+### Prerequisites
+
+Ensure you have the following installed on your local machine:
+
+- [Node.js](https://nodejs.org/) (version 14 or above)
+- [Git](https://git-scm.com/)
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/yourusername/task-manager-app.git
+   cd task-manager-app
