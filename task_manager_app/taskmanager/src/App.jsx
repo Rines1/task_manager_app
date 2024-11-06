@@ -1,7 +1,7 @@
 
 import Sidebar from './Components/Sidebar'
 import Settings from './Pages/Settings';
-import Dashboard from './Pages/Dashboard';
+import Dashboard from './Pages/Home';
 
 function App() {
 

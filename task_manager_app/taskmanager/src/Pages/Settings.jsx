@@ -1,92 +1,181 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
+import { ChevronDown } from 'lucide-react';
 
-const Settings = () => {
-  const [language, setLanguage] = useState('English (Default)');
-  const [timezone, setTimezone] = useState('GMT');
-  const [timeFormat, setTimeFormat] = useState('24 Hours');
+export default function Settings() {
+  const [activeTab, setActiveTab] = useState('general');
+  const [timeFormat, setTimeFormat] = useState('24Hours');
+  const [language, setLanguage] = useState('english');
+  const [timezone, setTimezone] = useState('utc');
+  const [emailNotifications, setEmailNotifications] = useState(false);
+  const [pushNotifications, setPushNotifications] = useState(false);
+
+  const tabs = [
+    { id: 'general', label: 'General' },
+    { id: 'notification', label: 'Notification' },
+  ];
+
+  const handleGeneralSubmit = (e) => {
+    e.preventDefault();
+  };
+
+  const handleNotificationSubmit = (e) => {
+    e.preventDefault();
+  };
 
   return (
-    <div className="w-full bg-gray-100 flex items-center justify-center">
-      <div className="bg-white w-2/3 max-w-3xl rounded-lg shadow-md p-8">
-        <h2 className="text-2xl font-semibold mb-6">Settings</h2>
-        
-        <div className="border-b mb-6">
-          <div className="flex space-x-8 pb-4">
-            <button className="text-blue-500 border-b-2 border-blue-500 pb-2">General</button>
-            <button className="text-gray-500">Notification</button>
-          </div>
+    <div className="max-w-3xl p-4 mx-auto md:p-6">
+      <div className="flex items-center justify-between mb-8">
+        <h1 className="text-2xl font-semibold">Settings</h1>
+        <button className="p-2 bg-gray-100 rounded-full">
+          <img
+            src="https://picsum.photos/32"
+            alt="profile"
+            className="rounded-full"
+          />
+        </button>
+      </div>
+
+      <div className="mb-8 border-b">
+        <div className="flex space-x-8">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              className={`relative pb-4 px-2 focus:outline-none ${
+                activeTab === tab.id
+                  ? 'text-indigo-600'
+                  : 'text-gray-600 hover:text-indigo-600'
+              }`}
+              onClick={() => setActiveTab(tab.id)}
+            >
+              {tab.label}
+              {activeTab === tab.id && (
+                <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-indigo-600"></div>
+              )}
+            </button>
+          ))}
         </div>
+      </div>
 
-        {/* Grid layout for form fields */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Language Selection */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Language</label>
-            <select
-              value={language}
-              onChange={(e) => setLanguage(e.target.value)}
-              className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            >
-              <option>English (Default)</option>
-              <option>French</option>
-              <option>Spanish</option>
-            </select>
+      {activeTab === 'general' && (
+        <form className="space-y-8" onSubmit={handleGeneralSubmit}>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Language
+            </label>
+            <div className="relative">
+              <select
+                className="w-full px-4 py-2 pr-8 text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                value={language}
+                onChange={(e) => setLanguage(e.target.value)}
+              >
+                <option value="english">English (Default)</option>
+                <option value="spanish">Spanish</option>
+                <option value="french">French</option>
+              </select>
+              <ChevronDown className="absolute w-4 h-4 text-gray-500 right-2 top-3" />
+            </div>
           </div>
 
-          {/* Timezone Selection */} <br />
-          <div>
-            <label className="block text-sm font-medium text-gray-700">Timezone</label>
-            <select
-              value={timezone}
-              onChange={(e) => setTimezone(e.target.value)}
-              className="mt-2 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-            >
-              <option>GMT</option>
-              <option>UTC</option>
-              <option>PST</option>
-              <option>EST</option>
-            </select>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Timezone
+            </label>
+            <div className="relative">
+              <select
+                className="w-full px-4 py-2 pr-8 text-gray-700 bg-white border border-gray-300 rounded-lg appearance-none focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                value={timezone}
+                onChange={(e) => setTimezone(e.target.value)}
+              >
+                <option value="utc">UTC (Default)</option>
+                <option value="est">EST (UTC-5)</option>
+                <option value="pst">PST (UTC-8)</option>
+              </select>
+              <ChevronDown className="absolute w-4 h-4 text-gray-500 right-2 top-3" />
+            </div>
           </div>
 
-          {/* Time Format Selection */}
-          <div className="col-span-1 md:col-span-2">
-            <label className="block text-sm font-medium text-gray-700">Time Format</label>
-            <div className="flex space-x-4 mt-2">
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="timeFormat"
-                  value="24 Hours"
-                  checked={timeFormat === '24 Hours'}
-                  onChange={(e) => setTimeFormat(e.target.value)}
-                  className="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300"
-                />
-                <span className="ml-2 text-sm">24 Hours</span>
-              </label>
-              <label className="flex items-center">
-                <input
-                  type="radio"
-                  name="timeFormat"
-                  value="12 Hours"
-                  checked={timeFormat === '12 Hours'}
-                  onChange={(e) => setTimeFormat(e.target.value)}
-                  className="h-4 w-4 text-blue-500 focus:ring-blue-500 border-gray-300"
-                />
-                <span className="ml-2 text-sm">12 Hours</span>
+          <div className="space-y-2">
+            <label className="block text-sm font-medium text-gray-700">
+              Time Format
+            </label>
+            <div className="flex space-x-4">
+              <button
+                type="button"
+                onClick={() => setTimeFormat('24Hours')}
+                className={`px-4 py-2 rounded-lg border focus:outline-none ${
+                  timeFormat === '24Hours'
+                    ? 'bg-indigo-600 text-white border-indigo-600'
+                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                }`}
+              >
+                24 Hours
+              </button>
+              <button
+                type="button"
+                onClick={() => setTimeFormat('12Hours')}
+                className={`px-4 py-2 rounded-lg border focus:outline-none ${
+                  timeFormat === '12Hours'
+                    ? 'bg-indigo-600 text-white border-indigo-600'
+                    : 'bg-white text-gray-700 border-gray-300 hover:bg-gray-50'
+                }`}
+              >
+                12 Hours
+              </button>
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="w-full px-8 py-2 text-white bg-indigo-600 rounded-lg md:w-auto hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
+            Save Changes
+          </button>
+        </form>
+      )}
+
+      {activeTab === 'notification' && (
+        <form className="space-y-8" onSubmit={handleNotificationSubmit}>
+          <div className="space-y-2">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="emailNotifications"
+                checked={emailNotifications}
+                onChange={(e) => setEmailNotifications(e.target.checked)}
+                className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+              />
+              <label
+                htmlFor="emailNotifications"
+                className="ml-2 text-sm text-gray-700"
+              >
+                Receive Email Notifications
               </label>
             </div>
           </div>
-        </div>
-
-        {/* Save Changes Button */}
-        <div className="mt-6">
-          <button className="w-100px px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+          <div className="space-y-2">
+            <div className="flex items-center">
+              <input
+                type="checkbox"
+                id="pushNotifications"
+                checked={pushNotifications}
+                onChange={(e) => setPushNotifications(e.target.checked)}
+                className="w-4 h-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500"
+              />
+              <label
+                htmlFor="pushNotifications"
+                className="ml-2 text-sm text-gray-700"
+              >
+                Receive Push Notifications
+              </label>
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="w-full px-8 py-2 text-white bg-indigo-600 rounded-lg md:w-auto hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+          >
             Save Changes
           </button>
-        </div>
-      </div>
+        </form>
+      )}
     </div>
   );
-};
-
-export default Settings;
+}
